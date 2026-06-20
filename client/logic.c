@@ -5,11 +5,11 @@
 #include <arpa/inet.h>
 #include "logic.h"
 
-return_code_t print_error_message(return_code_t rc)
+return_code_t print_error_message(return_code_t ret_code)
 {
-    return_code_t ret_code = ERR_OK;
+    return_code_t rc = ERR_OK;
 
-    switch (rc)
+    switch (ret_code)
     {
         case ERR_OK:
             break;
@@ -42,7 +42,7 @@ return_code_t print_error_message(return_code_t rc)
             break;
     }
 
-    return ret_code;
+    return rc;
 }
 
 return_code_t connect_to_server(const char* ip, int port, int* out_sock)
@@ -73,10 +73,8 @@ return_code_t connect_to_server(const char* ip, int port, int* out_sock)
     }
 
     if (rc == ERR_OK)
-    {
         if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
             rc = ERR_SOCKET_CONNECT;
-    }
 
     if (rc == ERR_OK)
         *out_sock = sock;
@@ -98,10 +96,8 @@ return_code_t send_request_and_receive(int sock, const request_t* req, response_
         rc = ERR_INVALID_ARG;
 
     if (rc == ERR_OK)
-    {
         if (send(sock, req, sizeof(request_t), 0) < 0)
             rc = ERR_SEND;
-    }
 
     if (rc == ERR_OK && req->cmd != CMD_EXIT)
     {
