@@ -33,6 +33,7 @@ static response_status_t db2rsp_status(db_status_t status)
             break;
         case DB_USER_NOT_FOUND:
             response_status = RESP_NOT_FOUND;
+            break;
         case DB_PET_NOT_FOUND:
             response_status = RESP_NOT_FOUND;
             break;

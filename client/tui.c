@@ -8,6 +8,10 @@
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 
+static void init_ui_layout(int hist_start_y);
+static void get_tui_input(int starty, int startx, const char *prompt, char *buffer, int max_len);
+static void log_history(WINDOW *win, const char *cmd_name, const char *args, response_t *res);
+
 static const char *choices[] = {"Add user",   "Delete user (and their pets)", "Add pet to user",
                                 "Delete pet", "Show all users and pets",      "Exit"};
 
