@@ -1,10 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "client.h"
 #include "logic.h"
 #include "tui.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-int main()
+int main(void)
 {
     return_code_t rc = ERR_OK;
     return_code_t cleanup_rc = ERR_OK;
@@ -28,5 +28,5 @@ int main()
             print_error_message(cleanup_rc);
     }
 
-	return rc;
+    return rc;
 }

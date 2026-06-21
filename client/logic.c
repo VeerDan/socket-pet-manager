@@ -1,9 +1,9 @@
+#include "logic.h"
+#include <arpa/inet.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <arpa/inet.h>
-#include "logic.h"
 
 return_code_t print_error_message(return_code_t rc)
 {
@@ -11,41 +11,41 @@ return_code_t print_error_message(return_code_t rc)
 
     switch (rc)
     {
-        case ERR_OK:
-            break;
-        case ERR_NULL_PTR:
-            fprintf(stderr, "Error: Null pointer passed.\n");
-            break;
-        case ERR_INVALID_ARG:
-            fprintf(stderr, "Error: Invalid argument passed.\n");
-            break;
-        case ERR_SOCKET_CREATE:
-            fprintf(stderr, "Error: Failed to create socket.\n");
-            break;
-        case ERR_INVALID_IP:
-            fprintf(stderr, "Error: Invalid IP address format.\n");
-            break;
-        case ERR_SOCKET_CONNECT:
-            fprintf(stderr, "Error: Failed to connect to server.\n");
-            break;
-        case ERR_SEND:
-            fprintf(stderr, "Error: Network send failed.\n");
-            break;
-        case ERR_RECV:
-            fprintf(stderr, "Error: Network receive failed.\n");
-            break;
-        case ERR_DISCONNECTED:
-            fprintf(stderr, "Error: Connection dropped by remote server.\n");
-            break;
-        default:
-            fprintf(stderr, "Error: Unknown return code (%d).\n", rc);
-            break;
+      case ERR_OK:
+          break;
+      case ERR_NULL_PTR:
+          fprintf(stderr, "Error: Null pointer passed.\n");
+          break;
+      case ERR_INVALID_ARG:
+          fprintf(stderr, "Error: Invalid argument passed.\n");
+          break;
+      case ERR_SOCKET_CREATE:
+          fprintf(stderr, "Error: Failed to create socket.\n");
+          break;
+      case ERR_INVALID_IP:
+          fprintf(stderr, "Error: Invalid IP address format.\n");
+          break;
+      case ERR_SOCKET_CONNECT:
+          fprintf(stderr, "Error: Failed to connect to server.\n");
+          break;
+      case ERR_SEND:
+          fprintf(stderr, "Error: Network send failed.\n");
+          break;
+      case ERR_RECV:
+          fprintf(stderr, "Error: Network receive failed.\n");
+          break;
+      case ERR_DISCONNECTED:
+          fprintf(stderr, "Error: Connection dropped by remote server.\n");
+          break;
+      default:
+          fprintf(stderr, "Error: Unknown return code (%d).\n", rc);
+          break;
     }
 
     return ret_code;
 }
 
-return_code_t connect_to_server(const char* ip, int port, int* out_sock)
+return_code_t connect_to_server(const char *ip, int port, int *out_sock)
 {
     return_code_t rc = ERR_OK;
     int sock = -1;
@@ -86,7 +86,7 @@ return_code_t connect_to_server(const char* ip, int port, int* out_sock)
     return rc;
 }
 
-return_code_t send_request_and_receive(int sock, const request_t* req, response_t* res)
+return_code_t send_request_and_receive(int sock, const request_t *req, response_t *res)
 {
     return_code_t rc = ERR_OK;
     ssize_t bytes_received = 0;
@@ -107,7 +107,7 @@ return_code_t send_request_and_receive(int sock, const request_t* req, response_
     {
         memset(res, 0, sizeof(response_t));
         bytes_received = recv(sock, res, sizeof(response_t), 0);
-        
+
         if (bytes_received < 0)
             rc = ERR_RECV;
         else if (bytes_received == 0)
