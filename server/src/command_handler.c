@@ -52,11 +52,9 @@ static response_status_t db2rsp_status(db_status_t status)
 static void set_response_message(response_t *response, response_status_t status, const char *format, ...)
 {
     va_list args;
-
     if (response != NULL)
     {
         response->status = status;
-
         if (format != NULL)
         {
             va_start(args, format);
@@ -64,9 +62,7 @@ static void set_response_message(response_t *response, response_status_t status,
             va_end(args);
         }
         else
-        {
             response->message[0] = '\0';
-        }
     }
 }
 
@@ -163,7 +159,7 @@ int should_close_session(const request_t *request)
 
 void process_request(FILE *users, FILE *pets, const request_t *request, response_t *response)
 {
-    if (request != NULL && response != NULL)
+    if (request != NULL && response != NULL && users != NULL && pets != NULL)
     {
         switch (request->cmd)
         {
