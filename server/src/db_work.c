@@ -325,10 +325,7 @@ db_status_t db_list_all(FILE *users, FILE *pets, char *buffer, size_t buffer_siz
     if (status == DB_OK)
         status = count_records(pets, sizeof(pet_t), &pets_cnt);
     if (status == DB_OK && users_cnt == 0)
-    {
         snprintf(buffer, buffer_size, "No users found.");
-        return DB_OK;
-    }
 
     for (size_t i = 0; i < users_cnt && status == DB_OK; i++)
     {
@@ -337,8 +334,6 @@ db_status_t db_list_all(FILE *users, FILE *pets, char *buffer, size_t buffer_siz
         user_t user;
 
         status = read_user_at(users, i, &user);
-        if (status != DB_OK)
-            break;
 
         snprintf(line, sizeof(line), "%s:", user.name);
         append_with_limit(buffer, buffer_size, &length, line);
@@ -348,8 +343,6 @@ db_status_t db_list_all(FILE *users, FILE *pets, char *buffer, size_t buffer_siz
             pet_t pet;
 
             status = read_pet_at(pets, j, &pet);
-            if (status != DB_OK)
-                break;
             if (pet.owner_id == user.user_id)
             {
                 if (has_pets)

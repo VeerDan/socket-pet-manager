@@ -120,11 +120,8 @@ db_status_t find_user_index_by_name(FILE *f, const char *name, size_t *index)
     for (i = 0; i < count && status == DB_USER_NOT_FOUND; i++)
     {
         if (fread(&user, sizeof(user_t), 1, f) != 1)
-        {
             status = DB_IO_ERROR;
-            break;
-        }
-        if (strcmp(user.name, name) == 0)
+        else if (strcmp(user.name, name) == 0)
         {
             *index = i;
             status = DB_OK;
@@ -158,11 +155,8 @@ db_status_t find_pet_index_by_owner_and_name(FILE *f, size_t owner_id, const cha
     for (i = 0; i < count && status == DB_PET_NOT_FOUND; i++)
     {
         if (fread(&pet, sizeof(pet_t), 1, f) != 1)
-        {
             status = DB_IO_ERROR;
-            break;
-        }
-        if (strcmp(pet.pet_name, petname) == 0 && pet.owner_id == owner_id)
+        else if (strcmp(pet.pet_name, petname) == 0 && pet.owner_id == owner_id)
         {
             *index = i;
             status = DB_OK;
@@ -222,11 +216,8 @@ db_status_t user_exists_by_id(FILE *f, size_t id)
     for (i = 0; i < count && status == DB_USER_NOT_FOUND; i++)
     {
         if (fread(&user, sizeof(user_t), 1, f) != 1)
-        {
             status = DB_IO_ERROR;
-            break;
-        }
-        if (user.user_id == id)
+        else if (user.user_id == id)
             status = DB_OK;
     }
     if (cur >= 0 && fseek(f, cur, SEEK_SET) != 0)
