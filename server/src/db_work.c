@@ -219,7 +219,7 @@ db_status_t db_remove_user(FILE *users, FILE *pets, const char *username, size_t
         pet_t pet;
 
         status = read_pet_at(pets, i, &pet);
-        if (pet.owner_id == user.user_id)
+        if (status == DB_OK && pet.owner_id == user.user_id)
         {
             size_t pet_idx = 0;
 
