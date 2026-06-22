@@ -214,7 +214,7 @@ db_status_t db_remove_user(FILE *users, FILE *pets, const char *username, size_t
     if (status == DB_OK)
         status = count_records(pets, sizeof(pet_t), &pets_cnt);
 
-    for (size_t i = 0; i < pets_cnt && status == DB_OK; )
+    for (size_t i = 0; i < pets_cnt && status == DB_OK; i++)
     {
         pet_t pet;
 
@@ -230,10 +230,9 @@ db_status_t db_remove_user(FILE *users, FILE *pets, const char *username, size_t
             {
                 pets_cnt--;
                 *removed_pets += 1;
-                continue;
+                i--;
             }
         }
-        i++;
     }
     return status;
 }
